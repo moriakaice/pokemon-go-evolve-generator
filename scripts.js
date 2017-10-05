@@ -22,7 +22,7 @@ var pokemonListDOM = document.createDocumentFragment()
 
 pokemonList.forEach(function (pokemon) {
   var div = document.createElement('div')
-  div.className = 'pokemon text-capitalize col-sm-4 col-md-2 alert alert-light'
+  div.className = 'pokemon text-capitalize col-6 col-sm-4 col-md-2 alert alert-light'
   div.dataset.id = pokemon.id.toString()
 
   if (!pokemon.candyToEvolve) {
