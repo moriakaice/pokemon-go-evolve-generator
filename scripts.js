@@ -21,18 +21,8 @@ var rare = ['DRATINI', 'MAREEP', 'LARVITAR', 'CHANSEY', 'PUPITAR', 'FLAAFFY', 'D
 var pokemonListDOM = document.createDocumentFragment()
 
 pokemonList.forEach(function (pokemon) {
-  var input = document.createElement('input')
-  input.type = 'checkbox'
-  input.value = pokemon.id.toString()
-
-  if (!pokemon.candyToEvolve) {
-    input.disabled = true
-  }
-
-  var label = document.createElement('label')
-
   var div = document.createElement('div')
-  div.className = 'pokemon text-capitalize col-sm-4 col-md-2'
+  div.className = 'pokemon text-capitalize col-sm-4 col-md-2 alert alert-light'
   div.dataset.id = pokemon.id.toString()
 
   if (!pokemon.candyToEvolve) {
@@ -53,21 +43,19 @@ pokemonList.forEach(function (pokemon) {
       div.className = div.className + ' text-success'
 
       if (!cachedData && pokemon.candyToEvolve <= 25 && !pokemon.itemRequired && div.className.indexOf('rare') === -1) {
-        input.checked = true
+        div.className = div.className.replace('alert-light', '') + ' alert-success'
         selected.push(pokemon.id)
       }
     }
   }
 
   if (cachedData && selected.indexOf(pokemon.id) !== -1) {
-    input.checked = true
+    div.className = div.className.replace('alert-light', '') + ' alert-success'
   }
 
-  var pokemonName = document.createTextNode(' ' + pokemon.name.replace(/_/g, ' ').replace('FEMALE', '♀').replace('MALE', '♂'))
+  var pokemonName = pokemon.name.replace(/_/g, ' ').replace('FEMALE', '♀').replace('MALE', '♂')
+  div.textContent = pokemonName
 
-  label.appendChild(input)
-  label.appendChild(pokemonName)
-  div.appendChild(label)
   pokemonListDOM.appendChild(div)
 })
 
@@ -105,19 +93,15 @@ generateEvolveFormula()
 
 jQuery(function () {
   jQuery(pokemonListContainer).on('click', function (e) {
-    e.stopPropagation()
-    e.preventDefault()
+    var pokemon = jQuery(e.target)
 
-    var target = jQuery(e.target)
-    var pokemon = target.parents('div.pokemon')
     if (pokemon.length && !pokemon.hasClass('disabled')) {
-      if (pokemon.find('input').is(':checked')) {
-        pokemon.find('input').prop('checked', false)
-      } else {
-        pokemon.find('input').prop('checked', true)
-      }
+      pokemon.toggleClass('alert-success').toggleClass('alert-light')
+
       updateSelected(pokemon.data('id'))
     }
+
+    return false
   })
 
   jQuery('[data-toggle="tooltip"]').tooltip()
