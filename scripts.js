@@ -16,7 +16,7 @@ function getSelectedPokemon() {
 }
 
 var selected = getSelectedPokemon()
-var rare = ['DRATINI', 'MAREEP', 'LARVITAR', 'CHANSEY', 'PUPITAR', 'FLAAFFY', 'DRAGONAIR']
+var rare = ['Dratini', 'Mareep', 'Larvitar', 'Chansey', 'Pupitar', 'Flaafy', 'Dragonair', 'Feebas', 'Bagon', 'Shelgon', 'Beldum', 'Metang']
 
 var pokemonListDOM = document.createDocumentFragment()
 
